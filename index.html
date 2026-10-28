@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The 9-to-5 Nightmare</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0816;--ink:#e9e4f5;--mute:#9a90b8;--acc:#b58cff;--hot:#ff5a7a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(ellipse at 50% -10%,#2a1850 0,var(--bg) 60%) fixed;color:var(--ink);font:19px/1.8 Georgia,'Times New Roman',serif;min-height:100vh}
+.wrap{max-width:720px;margin:0 auto;padding:24px 22px 120px}
+.art{width:100%;border-radius:14px;overflow:hidden;box-shadow:0 20px 60px #000a,0 0 0 1px #ffffff14;margin:8px 0 28px;animation:in .9s ease both}
+.art svg{display:block;width:100%;height:auto}
+.kick{font:600 12px/1 system-ui,sans-serif;letter-spacing:.3em;text-transform:uppercase;color:var(--acc);margin-bottom:10px}
+h1,h2{font-weight:400;line-height:1.15;margin:0 0 22px}
+h1{font-size:clamp(40px,9vw,72px);text-shadow:0 0 40px #b58cff66}
+h1 b{color:var(--hot)}
+h2{font-size:clamp(30px,6vw,44px)}
+p{margin:0 0 1.15em;animation:in .8s ease both}
+p.time{font:700 15px system-ui,sans-serif;letter-spacing:.25em;color:var(--hot);text-align:center;margin:1.6em 0;text-shadow:0 0 18px var(--hot)}
+.sub{color:var(--mute);font-style:italic;margin-bottom:28px}
+em{color:#fff}
+.nav{position:fixed;left:0;right:0;bottom:0;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));display:flex;gap:12px;align-items:center;justify-content:center;background:linear-gradient(transparent,#0b0816 55%);z-index:5}
+button{font:600 15px system-ui,sans-serif;color:var(--ink);background:#ffffff12;border:1px solid #ffffff2a;padding:12px 22px;border-radius:999px;cursor:pointer;transition:.2s}
+button:hover:not(:disabled){background:var(--acc);color:#14082a;box-shadow:0 0 24px #b58cff88}
+button:disabled{opacity:.25;cursor:default}
+.dots{display:flex;gap:8px}
+.dots i{width:9px;height:9px;border-radius:50%;background:#ffffff30;cursor:pointer;transition:.3s}
+.dots i.on{background:var(--hot);box-shadow:0 0 12px var(--hot);transform:scale(1.4)}
+.cover{text-align:center;padding-top:6vh}
+.cover .sub{max-width:480px;margin:0 auto 30px}
+.go{font-size:17px;background:var(--acc);color:#14082a;padding:14px 34px}
+.toc{display:flex;flex-direction:column;gap:6px;margin-top:34px;font:15px system-ui,sans-serif}
+.toc a{color:var(--mute);cursor:pointer;text-decoration:none}.toc a:hover{color:var(--acc)}
+.fade{animation:in .6s ease both}
+@keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+.wrap{padding-top:68px}
+.hud{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:6;display:flex;gap:8px;justify-content:center;padding:10px;font:600 13px system-ui,sans-serif;pointer-events:none}
+.hud[hidden]{display:none}
+.hud span{background:#0b0816cc;border:1px solid #ffffff22;padding:6px 12px;border-radius:99px;backdrop-filter:blur(8px)}
+.art{touch-action:pan-y}.L{transform:translateX(calc(var(--px,0)*var(--d)*1px));transition:transform .2s}
+.time{cursor:pointer;user-select:none}.time:after{content:"tap ◌";display:block;font-size:10px;letter-spacing:.2em;opacity:.55;margin-top:4px}
+.gl{border-bottom:1px dotted var(--acc);cursor:help}
+#tip{position:fixed;left:16px;right:16px;bottom:84px;max-width:480px;margin:auto;background:#1d1438;border:1px solid var(--acc);border-radius:14px;padding:12px 16px;font:15px/1.5 system-ui,sans-serif;z-index:9;opacity:0;pointer-events:none;transition:.3s;transform:translateY(8px)}#tip.on{opacity:1;transform:none}
+.wid{margin:30px 0;padding:18px;border-radius:16px;background:#ffffff0d;border:1px solid #ffffff22;font:15px/1.5 system-ui,sans-serif;touch-action:pan-y}
+.wid h4{margin:0 0 12px;font-size:14px;letter-spacing:.05em;color:var(--acc)}
+.wid svg{width:100%;display:block;margin:auto}.cap{margin-top:10px;color:var(--mute);min-height:3em}
+input[type=range]{width:100%;accent-color:var(--hot);margin-top:12px}
+.pt circle{fill:#444;transition:.4s;cursor:pointer}[data-ph="1"] .pt circle{fill:var(--hot);animation:pl 1s infinite}[data-ph="2"] .pt circle{fill:#999}
+@keyframes pl{50%{r:13;opacity:.6}}
+.camp{fill:#ffd28a}.tx{fill:var(--mute);font-size:9px}
+.dg{display:grid;grid-template-columns:repeat(10,1fr);gap:8px;max-width:360px;margin:auto}.dg i{aspect-ratio:1;border-radius:50%;background:var(--ink);transition:.5s}.dg i.x{background:#ffffff18;transform:scale(.4)}
+.bar{height:8px;background:#ffffff18;border-radius:9px;margin:14px 0 4px;overflow:hidden}.bar b{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--hot),var(--acc));transition:.4s}
+#rg circle{fill:#3a2c5c;stroke:#ffffff44;cursor:pointer;transition:.3s}#rg circle.j{fill:var(--acc)}#rg line{stroke:var(--hot);stroke-width:3;opacity:0;transition:.3s}#rg line.j{opacity:1}#rg.lit svg{filter:drop-shadow(0 0 14px var(--acc))}#rg text{fill:var(--ink);font-size:9px;text-anchor:middle}
+.rv{position:relative;border-radius:12px;overflow:hidden}.rv .top{position:absolute;inset:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:24px 0 8px;font:13px system-ui,sans-serif;color:var(--mute)}.chips span{border:1px solid #ffffff22;padding:6px 12px;border-radius:99px}
+.cast{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 14px;text-align:left}
+.card{flex:0 0 200px;scroll-snap-align:start;background:#ffffff0d;border:1px solid #ffffff22;border-top:3px solid var(--c,var(--acc));border-radius:12px;padding:14px;font:14px/1.5 system-ui,sans-serif}.card b{display:block;font-size:17px;margin-bottom:4px}.card span{color:var(--mute)}
+h3{font:600 12px system-ui,sans-serif;letter-spacing:.25em;text-transform:uppercase;color:var(--acc);margin:34px 0 10px;text-align:left}
+details{margin:0 0 26px;background:#ffffff0a;border-radius:12px;padding:12px 16px;font:15px/1.6 system-ui,sans-serif;color:var(--mute)}details p{margin:.6em 0 0}summary{cursor:pointer;color:var(--ink);font-weight:600}
+.sk{animation:sk .5s}@keyframes sk{20%{transform:translate(-6px,3px)}40%{transform:translate(6px,-3px)}60%{transform:translate(-4px,2px)}}
+#fl{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:20}#fl.on{animation:fl .5s}@keyframes fl{from{opacity:.9}to{opacity:0}}
+#pg{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--acc),var(--hot));z-index:30}
+.art{position:relative;cursor:pointer}.art.fx:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(105deg,transparent 0 10px,#9ab8 10px 11px);animation:rn .5s linear infinite;pointer-events:none}@keyframes rn{to{background-position:-40px 60px}}
+.opt{display:flex;flex-wrap:wrap;gap:8px}.wid button{margin-top:10px}.opt button{margin:0}
+.nxt{display:block;margin:36px auto 0;background:var(--acc);color:#14082a;padding:14px 34px}
+.big{font:700 64px system-ui,sans-serif;color:var(--acc);text-align:center}#qz .opt button{text-align:left;width:100%}#qz .cap button{margin:0 0 0 8px}#qz .q{font-size:18px;color:var(--ink);margin:0 0 14px}
+</style></head><body>
+<div class="wrap" id="app"></div>
+<div id="pg"></div><div id="tip"></div><div id="fl"></div><div class="hud" id="hud" hidden></div><div class="nav"><button id="pv">← Back</button><div class="dots" id="dots"></div><button id="nx">Next →</button></div>
+<script>
+const C=[
+["Chapter 1","The Wreckage and the Shift","w",`The silence of the jungle was heavy, almost synthetic.
+
+It wasn't the vibrant noise of nature; it was a muted, mechanical stillness. High above, the sky was a featureless vault of bruised violet daylight that never changed, never bled into sunset, and never showed a sun.
+
+Marcus pressed his back against the rusted hull of an overturned city bus. Banyan trees and thick, unnatural vines had wrapped themselves around the chassis like strangler figs, pinning the wreckage into the earth. Fifty feet away, Maya sat on a shattered concrete barrier, methodically cleaning the lenses of a pair of cracked glasses she no longer needed—her vision had cured itself the moment she awoke in this place, an unsettling detail she tried hard to ignore.
+
+"Any sign of a radio tower?" Maya called out, her voice barely carrying over the faint, subterranean hum that vibrated through the soil.
+
+"Nothing," Marcus said, wiping sweat from his forehead. "Just more concrete, more roots, and about a hundred people who have no idea how we got here."
+
+Three days ago, nearly a hundred strangers had woken up scattered across the ruined grid of a phantom metropolis swallowed by dense, ancient growth. No phones. No power lines. No horizon—just an oppressive canopy of bioluminescent trees and towering, moss-covered skyscrapers whose interiors were filled with solid stone.
+
+"We need to consolidate the water supplies before dark," said Vance, a tall, burly former firefighter whose steady composure had naturally made him the group's leader. He stepped over a mound of overgrown rubble, pointing toward a clearing near an abandoned, vaulted subway entrance. "Gather everyone at the concourse. If there's a storm coming, we'll need cover."
+
+By 8:45 PM, the group gathered beneath the crumbling concrete canopy of the transit station. Whispers of confusion and fear drifted through the crowd like smoke.
+
+"It doesn't make sense," a young woman named Sarah muttered, clutching a faded leather jacket tight against her chest. "I was on the subway on my way to work in Chicago. I closed my eyes for two minutes..."
+
+"Me too," Marcus replied gently. "Third Avenue line. One minute I was holding a cold brew, the next I was lying in a patch of ferns."
+
+At 8:59 PM, the subtle background hum of the forest went dead silent.
+
+A strange, mechanical chime—like the resonant, iron reverberation of a massive factory shift whistle—echoed from deep beneath the earth.
+
+"What was that?" Vance demanded, standing up and reaching for a heavy iron pipe.
+
+**9:00 PM.**
+
+The earth beneath the asphalt buckled with a violent shudder. From five distinct, glowing fissures around the perimeter of the clearing, dark, fluid-like figures dragged themselves up into the pale light. Their faces were featureless, hollowed-out husks, and as they expanded, their limbs snapped into place with sickening metallic clicks. They moved with terrifying, unnatural speed, uttering a rhythmic, guttural screech.
+
+"Run!" someone screamed.
+
+Chaos erupted. The horde hit the crowd like a tidal wave. Screams filled the night as survivors scrambled over debris, reaching blindly in the dark. Marcus grabbed Maya by the jacket, shoving her up the steps of the station as a creature lunged for her ankle, its pitch-black fingers turning to liquid iron before hardening into claws. Vance stood his ground near the foot of the stairs, swinging the heavy iron pipe with desperate, furious strength to buy them time.
+
+The violence was continuous, loud, and relentless. The survivors fought with rocks, broken pipes, and sheer instinct, driven into corners and torn apart in the dark as the hours stretched endlessly.
+
+Then, as suddenly as it had begun, a resonant chime cut through the air.
+
+**5:00 AM.**
+
+The creatures froze mid-stride. Their fluid forms rigidified and dissolved into fine grey ash, scattered instantly by a sudden, unnatural breeze.
+
+Silence returned. The faint violet light crept through the canopy once more, illuminating a blood-soaked encampment.
+
+Marcus collapsed against a concrete pillar, his chest heaving, his hands shaking violently. Maya slumped beside him, her face pale. Vance walked slowly through the wreckage, counting heads. His face was grim.
+
+"How many?" Maya asked, her voice cracking.
+
+"Sixty," Vance whispered, staring down at his bloodied hands. "There are only sixty of us left."`],
+["Chapter 2","The Routine of Survival","r",`Three weeks passed. The jungle did not change, but the survivors did.
+
+The initial terror subsided into something far more dangerous: a cold, mechanical routine. They had learned the precise architecture of the realm. Every night at 9:00 PM, the chime echoed, and the creatures spawned at five precise locations: the subway grid, the cracked fountain, the collapsed overpass, the bank lobby, and the sunken parking garage. Every morning at 5:00 AM, the whistle blew, and the horde dissolved.
+
+The remaining group had dwindled down to twenty-five. But those twenty-five were no longer panicked strangers. They were an efficient, lethal unit.
+
+"Spawn point three is clear!" Sarah shouted across the courtyard, lowering a reinforced wooden spear tipped with sharpened rebar. Her leather jacket was scuffed and tied at the waist, her movements precise, calculated, and effortless.
+
+"Focus on the flank at the overpass!" Vance called out from a high concrete ledge. He dropped a heavy cinder block onto an advancing creature below, crushing its hollow core instantly. "Maya, Marcus, hold the line at the bank entrance!"
+
+"On it!" Marcus yelled. He parried a strike from a hollow-faced assailant with a makeshift steel shield cut from a car door, driving a spike through its chest. Beside him, Maya swung an iron rod with practiced precision, stepping in cadence with Marcus's movements like clockwork.
+
+They didn't speak unnecessarily. They didn't panic. They fought like gear teeth in a clockwork machine.
+
+**5:00 AM.**
+
+The whistle chimed. The remaining creatures dissolved into harmless ash.
+
+Marcus lowered his shield and let out a long breath. He turned to Maya and offered a small, weary smile. "Good shift."
+
+"Good shift," Maya replied automatically, handing him a canteen.
+
+The twenty-five survivors gathered at the center camp. There were no tears today, no panic. They Band-Aided cuts, stacked weapons in designated racks, swept ash from the perimeter, and logged their inventory on scrap metal using sharp stones.
+
+"Zero casualties again," Vance announced during the morning briefing, his voice stern yet proud. "That's five nights in a row. We've mapped their paths. We know every spawn point. As long as everyone sticks to their station, nobody dies."
+
+Sarah sat on a crate, sharpening her spear with a flat river stone. "It's almost easy now. 9 to 5. Show up, do the work, go to sleep."
+
+Marcus looked around at the hardened faces of the group. Vance, Sarah, Maya, and twenty others. They had become family, forged in the fires of an endless night.
+
+"We're going to make it out of here," Marcus said quietly, sitting beside Maya. "We just have to keep the system tight."
+
+"Yeah," Maya whispered, staring down at her worn boots. "We just have to keep working."`],
+["Chapter 3","The Petrification Paradox","s",`That night, the 9-to-5 shift went flawlessly. Not a single survivor suffered so much as a scratch. By 11:30 PM, the horde at the main gate had been systematically repelled, and the group took their rotated ten-minute rest breaks.
+
+At 11:58 PM, Marcus was sitting near the central fire pit, checking the leather binding on his spear. Across from him sat David, a quiet engineer who had kept the group's rain-catchment filtration system running.
+
+"David, you good for the 1:00 AM watch?" Marcus asked.
+
+David didn't answer. He was staring down at his right hand.
+
+"David?"
+
+Maya walked over, holding two tin cups of boiled water. "What's wrong?"
+
+"I... I can't feel my fingers," David murmured.
+
+Marcus leaned in. Under the firelight, David's forearm had turned a dull, matte grey. Marcus reached out to touch it. It wasn't cold or clammy—it was cold, hard, unyielding granite.
+
+"Vance!" Maya yelled, her voice breaking the night's calm. "Get over here now!"
+
+By midnight, the grey coloration had crept up David's shoulder. Beside him, Sarah gasped as she collapsed to her knees—her left leg had turned solid stone from the hip down, pinning her to the ground with a dull, heavy thud.
+
+"What is this?!" Sarah screamed, hammering her fists against her petrified leg. It produced a hollow *clack-clack* sound. "Vance! What's happening to me?!"
+
+"Hold still!" Vance shouted, drawing a knife, but there was no wound, no venom to drain.
+
+Within thirty minutes, four more group members began turning to stone. The petrification crept steadily, inch by inch, spreading across their skin like a slow frost. By 12:45 AM, eight people were fully transformed into lifeless, grey statues, frozen in expressions of silent panic. Two more were halfway gone.
+
+Among them was David. He sat completely immobile, a statue staring blankly into the fire.
+
+"The creatures aren't even near us!" Sarah sobbed, her torso turning grey. Her throat was stiffening, making her voice scratchy and faint. "We did everything right... we stopped them..."
+
+A young survivor named Leo looked down at his boots. The grey stone was creeping up his shins. He looked at the eight statues of his friends, then at Vance, then at Marcus.
+
+"I can't... I can't be a stone," Leo whimpered, tears cutting clean tracks down his dust-covered face. "I can't be trapped inside my own head..."
+
+"Leo, wait—" Marcus started, taking a step forward.
+
+Before anyone could reach him, Leo drew his side-knife and drove it deep into his own chest.
+
+He collapsed to the dirt.
+
+A sharp, violent shockwave of warm air burst from Leo's body, rippling across the clearing. Instantly, the sound of cracking stone echoed through the camp like snapping timber.
+
+*CRACK.*
+
+David gasped, drawing a deep, ragged breath as skin and blood rushed back into his arm. Sarah fell forward, her legs turning back to soft flesh as she tumbled onto the earth, weeping hysterically. Every single petrified survivor fell to the ground, fully restored, gasping for air as if breaking through the surface of deep water.
+
+Marcus stood frozen, looking from Leo's lifeless body on the ground to the living, breathing comrades who had been stone seconds ago.
+
+The silence that followed was suffocating.`],
+["Chapter 4","The Fall of Trust","t",`The realization was a poison that seeped into the camp by sunrise.
+
+"It demands a trade," Vance said, his voice flat and cold as he stood over the dying fire the next afternoon. "The system doesn't care if we defeat the creatures. The realm requires a quota. A blood tax. If nobody dies in combat, it takes us through the stone."
+
+"One life," Maya said softly, her eyes hollow. "Leo's death saved ten people."
+
+"So what are you saying?" Sarah demanded, her voice sharp and wild. She backed away from the circle, her hand resting on the hilt of her blade. "We choose someone to die every night? Who gets to pick?"
+
+"Nobody picks!" Marcus snapped, stepping between them. "We find another way! We break the spawn gates, we tear down the walls—"
+
+"We've tried everything for a month, Marcus!" Vance cut him off, his eyes dark with desperate intensity. "You saw what happened. If we don't bleed, we turn to rock. Do you want to spend eternity as a statue in this damn jungle?"
+
+"So you're proposing murder?" Maya asked, glaring at Vance.
+
+"I'm proposing survival!" Vance roared.
+
+The trust that had taken weeks of shared blood and sweat to build disintegrated in hours.
+
+That night, when the 9:00 PM whistle blew, the defense collapsed entirely. No one watched each other's backs. Everyone fought defensively, looking over their shoulders not at the creatures, but at their fellow survivors.
+
+"Vance! Behind you!" David called out during the height of the fight.
+
+Vance turned, saw a creature leaping toward David—and deliberately stepped back, letting it happen.
+
+"Vance! Help me!" David screamed as he was dragged down into the shadows.
+
+Vance didn't move. "That's one," he muttered under his breath.
+
+"You monster!" Sarah shrieked, turning her spear toward Vance instead of the horde.
+
+By midnight, the camp was a warzone of paranoia. Friends fought friends in the shadows of the ruins, desperate to ensure that someone—anyone else—was sacrificed before the petrification could take hold. Screams of betrayal rang louder than the screeches of the monsters.
+
+By the fourth night after the paradox began, the group had decimated itself. Where twenty-five battle-tested comrades once stood, only ten remained.`],
+["Chapter 5","Choosing Humanity","h",`The rain fell in sheets, washing ash and mud across the ruined plaza.
+
+The ten remaining survivors stood in a circle around the dying coals of the central fire. Marcus, Maya, Vance, Sarah, and six others. Their clothes were tattered, their faces bruised, their eyes completely drained of light.
+
+Vance held a bloody hatchet, his hands trembling violently. "It's almost midnight," he rasped, his voice breaking. "Someone... someone has to..."
+
+He looked at Sarah. He looked at Maya. But as he met Maya's eyes, something in Vance seemed to shatter. The weight of every calculated sacrifice, every cold decision, collapsed on his chest. He dropped the hatchet into the mud with a dull thud.
+
+"I can't," Vance whispered, sinking to his knees in the sludge. "I killed Miller yesterday. I watched David die. I'm... I don't even know who I am anymore."
+
+"None of us do," Sarah said softly, letting her spear slip from her fingers. She looked down at her hands, stained grey with dried dirt and old blood. "We survived the monsters just to become them."
+
+Maya walked over to Vance and held out her hand, helping the large man to his feet. She looked around at the ten broken souls left in the rain.
+
+"We thought staying alive was the point," Maya said, her voice remarkably clear over the sound of the storm. "But this place isn't trying to kill our bodies. It's trying to make us give up our humanity. Every time we sacrifice one of us to save ourselves, we're already turning to stone."
+
+Marcus stepped beside Maya, taking her hand. "No more sacrifices," he said quiet and firm. "No more trading lives. If we die tonight, we die as human beings."
+
+One by one, the others stepped forward.
+
+Sarah took Marcus's free hand. Vance took Maya's. The remaining six joined hands, forming an unbreakable ring in the center of the flooded plaza.
+
+**12:00 AM.**
+
+A cold thrill swept through Marcus's veins. He felt the heavy, rigid weight creep up his ankles, locking his joints in place. He looked to his left; grey stone was already spreading across Sarah's neck.
+
+She wasn't screaming. She was smiling, tears brimming in her eyes. "Thank you," she whispered.
+
+"Hold tight," Marcus said, squeezing Maya's hand with all the strength he had left.
+
+"I'm holding," Maya replied, leaning her head against his shoulder as the stone washed over her chest and face, locking her warm expression into eternal stillness.
+
+Vance closed his eyes, taking a deep, final breath as the petrification encased his jaw.
+
+Marcus felt the frost reach his eyes. He didn't fight it. He held Maya's hand tight, looked up at the canopy one last time, and let the darkness close in.`],
+["Epilogue","The Awakening","c",`**BLARE!**
+
+A deafening truck horn shrieked through the air.
+
+Marcus gasped, his lungs inflating violently with cold, diesel-scented air.
+
+He wasn't lying on wet moss or broken concrete. He was lying on cold asphalt. Bright white fluorescent streetlights blinded him, and the yellow glow of headlights washed over his face.
+
+"Hey! Get out of the street! Are you crazy?!" a cab driver yelled, leaning out of his window, slamming his hand on the horn.
+
+Marcus sat up abruptly. The jungle was gone. The ruined skyscrapers were replaced by the glittering glass towers of Michigan Avenue. Cars swerved around them, tires screeching on the rain-slick pavement.
+
+Beside him, nine people scrambled up from the road.
+
+Maya looked at her hands—soft, warm, flesh and blood. She looked at Marcus, then down at their clasped fingers. They were still holding hands.
+
+"Marcus?" she breathed.
+
+Sarah was sitting in the lane beside them, laughing hysterically, wiping real tears from her cheeks. Vance stood in the middle of the street, staring up at the traffic lights, his broad shoulders shaking with silent, overwhelmed sobs.
+
+All ten of them gathered on the sidewalk as pedestrian crowds brushed past them, rushing home from late-night shifts, completely oblivious.
+
+"We made it," Vance choked out, wiping his face with his sleeve. "We're back."
+
+"How?" Sarah asked, looking around at the bustling city. "Why did it let us go?"
+
+Marcus looked at Maya, then at Vance, and finally at the crowd of commuters marching past them with tired, distant eyes.
+
+"Because we refused to play the game," Marcus said softly.
+
+They stood together on the noisy city corner, ten strangers who had descended into the dark, faced the monster within, and chosen love over survival. They knew they could never tell a soul. No one would ever believe them.
+
+Maya squeezed Marcus's hand one last time before letting go.
+
+They didn't need to speak the secret aloud. They just looked at one another, smiled through their tears, and stepped forward into the real world together.
+
+**The End**`]];
+
+// Illustrations: layered SVG scenes (inline, no external images)
+const sky={w:["#2b1655","#6a3fa8"],r:["#1d1245","#5b3a9a"],s:["#1a1a2a","#4a4a66"],t:["#2a0b1a","#7a1f3a"],h:["#0c1230","#3a4a8a"],c:["#14102a","#e8a85a"]};
+function bld(n,col,seed){let x=0,s="",r=seed;while(x<800){r=(r*9301+49297)%233280;const w=40+r%50,h=70+(r%130);s+=`<rect x="${x}" y="${260-h}" width="${w}" height="${h+140}" fill="${col}"/>`;x+=w+4}return s}
+function tree(x,h,c){return `<path d="M${x} 400 L${x} ${400-h}" stroke="${c}" stroke-width="7"/><circle cx="${x}" cy="${400-h}" r="${h/3}" fill="${c}"/>`}
+let U=0;function art(k){const[a,b]=sky[k],u="g"+k+(U++);let ex="";
+if(k=="w")ex=`<rect x="250" y="285" width="200" height="60" rx="14" fill="#2b1a3a" transform="rotate(-12 350 315)"/><circle cx="290" cy="345" r="16" fill="#120a1e"/><circle cx="410" cy="345" r="16" fill="#120a1e"/>`;
+if(k=="r")ex=`<circle cx="400" cy="150" r="70" fill="none" stroke="#e9e4f5" stroke-width="3"/><path d="M400 150V100M400 150L440 165" stroke="#e9e4f5" stroke-width="4"/><path d="M180 390L215 270M620 390L585 270" stroke="#b58cff" stroke-width="5"/>`;
+if(k=="s")ex=[200,320,440,560,670].map((x,i)=>`<g fill="#8a8a9a"><circle cx="${x}" cy="${290+i%2*10}" r="17"/><rect x="${x-18}" y="${308+i%2*10}" width="36" height="75" rx="10"/></g>`).join("")+`<circle cx="400" cy="400" r="40" fill="#ff7a2a" opacity=".5"/>`;
+if(k=="t")ex=`<path d="M0 345H800" stroke="#ff5a7a" stroke-width="2" stroke-dasharray="10 12"/><g fill="#0a0408"><circle cx="250" cy="300" r="17"/><rect x="232" y="318" width="36" height="70" rx="10"/><circle cx="540" cy="300" r="17"/><rect x="522" y="318" width="36" height="70" rx="10"/></g><path d="M300 330L500 330" stroke="#ff5a7a" stroke-width="3"/>`;
+if(k=="h")ex=Array.from({length:60},(_,i)=>`<path d="M${(i*53)%800} ${(i*37)%300}l-8 28" stroke="#9ab" opacity=".5"/>`).join("")+`<g fill="#0a0e20">${[260,330,400,470,540].map(x=>`<circle cx="${x}" cy="305" r="14"/><rect x="${x-14}" y="320" width="28" height="68" rx="8"/>`).join("")}</g><path d="M260 345H540" stroke="#ffd28a" stroke-width="3"/>`;
+if(k=="c")ex=Array.from({length:40},(_,i)=>`<rect x="${(i*71)%780}" y="${120+(i*43)%120}" width="8" height="10" fill="#ffd28a" opacity=".8"/>`).join("")+`<g fill="#0a0814"><circle cx="360" cy="320" r="14"/><rect x="346" y="334" width="28" height="56" rx="8"/><circle cx="430" cy="320" r="14"/><rect x="416" y="334" width="28" height="56" rx="8"/></g>`;
+const jungle=k=="c"?"":tree(60,120,"#0d2a22")+tree(740,150,"#0d2a22")+tree(130,70,"#143a2e")+tree(680,80,"#143a2e");
+return `<svg viewBox="0 0 800 400"><defs><linearGradient id="${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="800" height="400" fill="url(#${u})"/><g class="L" style="--d:1">${bld(0,k=="c"?"#0a0814":"#1a1030",k.charCodeAt(0))}</g><g class="L" style="--d:3">${jungle}</g><rect y="385" width="800" height="15" fill="#07050e"/><g class="L" style="--d:2">${ex}</g></svg>`}
+const $=s=>document.querySelector(s),app=$("#app"),dots=$("#dots"),hud=$("#hud"),tipEl=$("#tip"),bp=$("#pv"),bn=$("#nx");
+const fmt=s=>s.replace(/(^|[\s(—])"/g,"$1“").replace(/"/g,"”").replace(/'/g,"’").replace(/\*\*(.+?)\*\*/g,"$1").replace(/\*(.+?)\*/g,"<em>$1</em>");
+const N=C.length+4;
+const MOOD=["","Confused","Routine","Dread","Paranoia","Resolve","Relief"],POP=[0,100,25,25,25,10,10],TS=["","Day 3","Week 3","11:30 PM","Next day","Near midnight","Late night"];
+const RC=[0,
+["An overgrown ghost-city under a violet sky with no sun. About 100 strangers woke up here 3 days ago.","the clock. Something happens at 9:00 PM."],
+["Three weeks later. 25 survivors are left, and they have a system.","how calm everyone has become."],
+["The system works perfectly. Nobody is hurt.","midnight. Something feels wrong."],
+["A terrible rule has just been discovered.","who stays loyal to whom."],
+["Ten people are left, in the rain, close to midnight.","what they choose."],
+["The night is over. Or is it?","their hands."]];
+const GL={"concourse":"A big open hall inside a train or subway station.","banyan":"A tree whose roots and vines wrap around things like ropes.","bioluminescent":"Glowing on its own, like fireflies.","chime":"A bell-like tone. Here it announces the night.","spawn point":"A spot where the shadow creatures climb out of the ground.","petrification":"Turning into stone.","quota":"A fixed number that must be met. Here, a death.","paranoia":"The fear that the people around you are against you."};
+const CAST=[["Marcus","Our narrator. Was holding a cold brew on the Third Avenue line when it all began.","#b58cff"],["Maya","Marcus’s partner in every fight. Her eyesight healed itself in the realm.","#ff8fb1"],["Vance","Former firefighter. Calm, strong, and the group’s natural leader.","#ffb347"],["Sarah","A Chicago commuter in a leather jacket. Sharp, quick, brave.","#7dd3c0"],["David","A quiet engineer who keeps the water filters running.","#8ab4ff"],["Leo","A young survivor, new to the group.","#c9c9d9"]];
+const RULES=[["🌌 The realm","A ghost-city swallowed by jungle. Violet sky, no sun, no way out.","#b58cff"],["🔔 9:00 PM","A whistle sounds. Shadow creatures crawl up from the ground and attack.","#ff5a7a"],["☁ 5:00 AM","Another whistle. The creatures crumble to ash. The survivors count heads.","#ffd28a"]];
+const card=c=>`<div class="card" style="--c:${c[2]}"><b>${c[0]}</b><span>${c[1]}</span></div>`;
+const seen=new Set(),gl=t=>{for(const k in GL){const re=new RegExp("\\b"+k,"i");if(!seen.has(k)&&re.test(t)){seen.add(k);t=t.replace(re,m=>`<span class="gl" data-k="${k}">${m}</span>`)}}return t};
+let tm,tt,ac,H={},hinted=0;
+const bz=n=>navigator.vibrate&&navigator.vibrate(n);
+const T=m=>{m%=1440;const h=Math.floor(m/60);return((h+11)%12+1)+":"+String(m%60).padStart(2,"0")+(h>=12?" PM":" AM")};
+function sH(o){Object.assign(H,o);hud.innerHTML=`<span>🕘 ${H.t}</span><span>👥 ${H.n}</span><span>${H.m}</span>`}
+function tip(s){tipEl.textContent=s;tipEl.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>tipEl.classList.remove("on"),4500)}
+function tone(f,d=1.4,ty="sine"){try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.type=ty;o.frequency.value=f;g.gain.setValueAtTime(.15,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+d);o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+d)}catch(e){}}
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const s=e.target.textContent,m=s.match(/\d+:\d+ [AP]M/);if(m)sH({t:m[0]});if(cur==1&&/5:00/.test(s))sH({n:60})}),{rootMargin:"-45% 0px -45% 0px"});
+
+/* Widget 1: the night map (chapters 1 and 2) */
+const PT=[[50,40,"Subway grid"],[150,25,"Cracked fountain"],[250,45,"Collapsed overpass"],[80,115,"Bank lobby"],[220,115,"Sunken parking garage"]];
+const mapW=nm=>`<div class="wid" id="mp"><h4>🗺 ${nm?"Tap a spawn point, then drag through the night":"Drag through the night"}</h4><svg viewBox="0 0 300 150">${PT.map((p,i)=>`<g class="pt" data-i="${i}"><circle cx="${p[0]}" cy="${p[1]}" r="9"/></g>`).join("")}<circle cx="150" cy="80" r="7" class="camp"/><text x="150" y="98" text-anchor="middle" class="tx">camp</text></svg><input type="range" min="0" max="100" value="0" aria-label="Time of night"><div class="cap"></div></div>`;
+function mapI(nm){const w=$("#mp"),r=w.querySelector("input"),c=w.querySelector(".cap");let sel="";
+const up=f=>{const v=+r.value,ph=v<4?0:v<100?1:2,t=T(1245+Math.round(v*4.95));w.dataset.ph=ph;if(!f)sH({t});c.textContent=t+" · "+["Quiet. Only the strange hum.","Creatures climb out of every crack and attack.","The whistle blows. Everything turns to ash."][ph]+(sel?" · 📍 "+sel:"")};
+r.oninput=()=>up();w.querySelectorAll(".pt").forEach(g=>g.onclick=()=>{if(nm)sel=PT[g.dataset.i][2];up();bz(20)});up(1)}
+
+/* Widget 2: stone spreading (chapter 3) */
+const fig=c=>`<g fill="${c}"><circle cx="60" cy="26" r="16"/><rect x="38" y="46" width="44" height="66" rx="14"/><rect x="42" y="108" width="15" height="56" rx="6"/><rect x="63" y="108" width="15" height="56" rx="6"/></g>`;
+const stW=()=>`<div class="wid" id="st"><h4>🪨 Drag to watch the stone spread</h4><svg viewBox="0 0 120 170" style="max-width:150px"><defs><clipPath id="cp"><rect id="cr" x="0" y="170" width="120" height="170"/></clipPath></defs>${fig("#e0b090")}<g clip-path="url(#cp)">${fig("#7b7b88")}</g></svg><input type="range" min="0" max="100" value="0" aria-label="Minutes after 11:58 PM"><div class="cap"></div></div>`;
+function stI(){const w=$("#st"),r=w.querySelector("input"),c=w.querySelector(".cap"),cr=$("#cr");
+const up=f=>{const v=+r.value,t=T(1438+Math.round(v*.47));cr.setAttribute("y",170*(1-v/100));if(!f)sH({t});c.textContent=t+" · "+(v<10?"David can’t feel his fingers.":v<60?"Stone creeps up. No wound, no attacker.":v<100?Math.round(v*.08)+" statues so far, others halfway.":"Eight statues, two more halfway. No monster was near.")};
+r.oninput=()=>up();up(1)}
+
+/* Widget 3: trust and the quota (chapter 4) */
+const trW=()=>`<div class="wid" id="tr"><h4>💔 One night, one quota</h4><div class="dg">${"<i></i>".repeat(25)}</div><div class="bar"><b></b></div><div class="cap">Each dot is a person. The bar is trust. Press the button.</div><button>Run the night</button></div>`;
+function trI(){const w=$("#tr"),d=[...w.querySelectorAll(".dg i")],b=w.querySelector(".bar b"),c=w.querySelector(".cap"),bt=w.querySelector("button");
+bt.onclick=()=>{clearInterval(tm);d.forEach(e=>e.className="");b.style.width="100%";sH({n:25});let l=25;const o=[...d].sort(()=>Math.random()-.5);bt.disabled=true;c.textContent="9:00 PM. No one trusts anyone…";
+tm=setInterval(()=>{o[25-l].className="x";l--;sH({n:l});b.style.width=(30+(l-10)/15*70)+"%";bz(15);if(l==10){clearInterval(tm);bt.disabled=false;bt.textContent="Replay";c.textContent="Where 25 once stood, 10 remain. Fear did what the monsters couldn’t."}},380)}}
+
+/* Widget 4: the ring of hands (chapter 5) */
+const rgN=["Sarah","Marcus","Maya","Vance"];
+const rgW=()=>{let s="",l="";for(let i=0;i<10;i++){const a=i/10*6.283-1.57,x=150+85*Math.cos(a),y=110+75*Math.sin(a),a2=((i+1)%10)/10*6.283-1.57;l+=`<line data-i="${i}" x1="${x}" y1="${y}" x2="${150+85*Math.cos(a2)}" y2="${110+75*Math.sin(a2)}"/>`;s+=`<g><circle data-i="${i}" cx="${x}" cy="${y}" r="14"/><text x="${x}" y="${y+28}">${rgN[i]||""}</text></g>`}
+return`<div class="wid" id="rg"><h4>🤝 Close the ring</h4><svg viewBox="0 0 300 220">${l}${s}</svg><div class="cap">Tap each survivor to take their hand.</div></div>`};
+function rgI(){const w=$("#rg"),c=w.querySelector(".cap"),j=new Set();
+w.querySelectorAll("circle").forEach(e=>e.onclick=()=>{const i=+e.dataset.i;j.has(i)?j.delete(i):j.add(i);e.classList.toggle("j");w.querySelectorAll("line").forEach(l=>{const a=+l.dataset.i;l.classList.toggle("j",j.has(a)&&j.has((a+1)%10))});bz(30);tone(220+j.size*40,.5);
+if(j.size==10){w.classList.add("lit");c.textContent="Ten hands. One unbroken ring. No one left outside it.";sH({m:"Together"})}else{w.classList.remove("lit");c.textContent=j.size+" of 10 hands joined."}})}
+
+/* Widget 5: waking up (epilogue) */
+const epW=()=>`<div class="wid" id="ep"><h4>🌃 Drag to wake up</h4><div class="rv"><div>${art("c")}</div><div class="top">${art("w")}</div></div><input type="range" min="0" max="100" value="0" aria-label="Wake up"><div class="cap"></div><button>📯 BLARE!</button></div>`;
+function epI(){const w=$("#ep"),r=w.querySelector("input"),t=w.querySelector(".top"),c=w.querySelector(".cap");
+const up=()=>{t.style.clipPath=`inset(0 0 0 ${r.value}%)`;c.textContent=r.value<30?"Wet moss. Broken concrete. The hum.":r.value<80?"Headlights. Fluorescent light. Diesel.":"Cold asphalt, real rain, Michigan Avenue."};
+r.oninput=up;up();w.querySelector("button").onclick=()=>{tone(110,.8,"sawtooth");tone(138,.8,"sawtooth");const f=$("#fl");f.classList.remove("on");void f.offsetWidth;f.classList.add("on");bz([80,40,80])}}
+
+const CHs={1:["You’re at the station at 8:59 PM. What do you do?",[["Run for the tall buildings","Their insides are solid stone. There’s nowhere to hide in them."],["Grab a pipe like Vance","Pipes help, but forty people still fall that night."],["Stay in the crowd","Crowds scatter. Marcus grabbed Maya and ran for the steps."]]],2:["Five nights, zero casualties. Do you relax?",[["Yes, we earned it","So did they. Then midnight came."],["No, something’s off","Maya stares at her boots: “We just have to keep working.”"]]],3:["Eight are stone and nobody was attacked. Your theory?",[["A curse on the group","Close. The realm demands a price."],["A trap in the system","Yes. Beating the monsters was never the real test."],["Poison in the water","Vance’s knife found no wound and no venom to drain."]]],4:["Who do you trust?",[["Vance","He called it survival, then stepped back as David was dragged down."],["Sarah","She turned her spear on Vance after David fell."],["Maya","She asked him: “So you’re proposing murder?”"],["Marcus","He snapped: “We find another way!”"]]],5:["Vance drops the hatchet. Why?",[["Guilt","He named Miller and David aloud: “I don’t even know who I am anymore.”"],["Maya’s eyes","That’s when something in him shattered."],["Exhaustion","Partly. The weight of every cold decision collapsed on his chest."]]],6:["Why did the realm let them go?",[["Time ran out","They were still holding on when the clock turned."],["They refused to play","Marcus says it himself: “Because we refused to play the game.”"],["Luck","Ten people holding hands is not luck."]]]};
+let hum=0;
+const EN=c=>{const[q,o]=CHs[c]||[];if(!q)return"";return`<div class="wid ch"><h4>🧭 ${q}</h4><div class="opt">${o.map((x,i)=>`<button data-i="${i}">${x[0]}</button>`).join("")}</div><div class="cap">Tap an answer.</div>${c==1?'<button id="hm">🔊 Hear the hum</button>':c==2?'<button id="gs">Say “Good shift”</button>':""}</div>`};
+function xI(){const w=document.querySelector(".ch");if(!w)return;const c=w.querySelector(".cap");
+w.querySelectorAll(".opt button").forEach(b=>b.onclick=()=>{c.textContent=CHs[cur][1][b.dataset.i][1];w.querySelectorAll(".opt button").forEach(x=>x.style.opacity=.5);b.style.opacity=1;bz(20)});
+const hm=$("#hm");if(hm)hm.onclick=()=>{if(hum){hum.o.stop();hum=0;hm.textContent="🔊 Hear the hum";return}try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=55;g.gain.value=.12;o.connect(g);g.connect(ac.destination);o.start();hum={o};hm.textContent="🔇 Silence it"}catch(e){}};
+const gs=$("#gs");if(gs){let n=0;gs.onclick=()=>{n++;c.textContent=n<3?"“Good shift.” “Good shift.”":n<6?"Same words. Same tone. Neither looks up.":"They’re not talking to each other anymore. They’re running a script.";bz(10)}}}
+addEventListener("scroll",()=>{$("#pg").style.width=(scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)*100)+"%"},{passive:true});
+let GR;
+const Q=[["When do the creatures appear each night?",["Midnight","9:00 PM","5:00 AM"],1],["What happens to the creatures at 5:00 AM?",["They dissolve into grey ash","They hide underground and wait","They turn to stone"],0],["How many survive the first night?",["40","25","60","10"],2],["What was Vance’s job before the realm?",["Soldier","Firefighter","Doctor"],1],["What does David do for the camp?",["Guards the gate","Hunts for food","Keeps the water filtration running"],2],["What happens at midnight when nobody dies?",["The creatures return","People start turning to stone","The sky turns red"],1],["Whose death breaks the petrification?",["Leo’s","David’s","Sarah’s"],0],["How many are left after trust collapses?",["Five","Fifteen","Ten","Twenty"],2],["Why does Vance drop the hatchet?",["It breaks","He can’t sacrifice another life","A creature knocks it away"],1],["Why does the realm let them go?",["They refused to play its game","They defeated every creature","Time simply ran out"],0]];
+const quizH=()=>`<div class="fade"><div class="kick">Quiz</div><h2>Test your memory</h2><div class="wid" id="qz"></div></div>`;
+function qI(){const w=$("#qz");let i=0,s=0;const show=()=>{if(i>=10){const r=s>8?"Realm survivor":s>5?"Night shifter":s>2?"Half-statue":"Lost in the jungle";w.innerHTML=`<h4>Final score</h4><div class="big">${s}/10</div><div class="cap" style="text-align:center">${r}</div><div class="bar"><b style="width:${s*10}%"></b></div><button id="rt">Try again</button>`;tone(s>5?392:98,1.2);$("#rt").onclick=()=>{i=s=0;show()};return}
+const[q,o,a]=Q[i];w.innerHTML=`<h4>Question ${i+1} of 10 · Score ${s}</h4><div class="q">${q}</div><div class="opt" style="flex-direction:column">${o.map((x,j)=>`<button data-j="${j}">${x}</button>`).join("")}</div><div class="cap"></div>`;
+w.querySelectorAll(".opt button").forEach((b,j)=>b.onclick=()=>{const ok=j==a;if(ok)s++;w.querySelectorAll(".opt button").forEach((x,k)=>{x.style.pointerEvents="none";if(k==a)x.style.background="#2a7a4a"});if(!ok)b.style.background="#8a2a3a";w.querySelector(".cap").innerHTML=(ok?"✔ Correct. ":"✘ Not quite. ")+`<button id="nq">${i<9?"Next":"See score"} →</button>`;bz(ok?20:[60,30,60]);$("#nq").onclick=()=>{i++;show()}})};show()}
+
+const gameH=()=>`<div class="fade"><div class="kick">Final page</div><h2>Survive the Night</h2><div class="wid"><canvas id="gc" width="360" height="480" style="width:100%;max-width:420px;display:block;margin:auto;border-radius:12px;touch-action:none"></canvas><div class="cap">Tap anywhere to fire from the camp. Ammo is limited (10 per clip, 50 spare, and kills sometimes drop more), so don’t waste shots. Press R to reload early. After midnight, stone spreads: press and hold the camp ring (or hold Space) to keep hands joined and push it back. Survive until 5:00 AM.</div></div></div>`;
+function gI(){const cv=$("#gc"),x=cv.getContext("2d"),W=360,Hh=480,cx=180,cy=250,sp=[[30,40],[330,40],[30,440],[330,440],[180,20]];
+let st=0,t=0,s=10,stone=0,E=[],fx=[],hold=0,keys=0,last=0,ar=0,stat=0,kills=0,B=[],mag=10,res=50,rl=0;
+const rst=()=>{st=1;t=0;s=10;stone=0;E=[];fx=[];stat=0;kills=0;B=[];mag=10;res=50;rl=0;last=performance.now()};
+const pos=e=>{const r=cv.getBoundingClientRect();return[(e.clientX-r.left)*W/r.width,(e.clientY-r.top)*Hh/r.height]};
+cv.onpointerdown=e=>{const[px,py]=pos(e);if(st==3)return;if(st!=1){rst();return}if(Math.hypot(px-cx,py-cy)<50){hold=e.pointerId;return}if(rl>0||mag<1)return;const dx=px-cx,dy=py-cy,d=Math.hypot(dx,dy)||1;B.push({x:cx,y:cy,vx:dx/d*520,vy:dy/d*520});mag--;fx.push([cx+dx/d*30,cy+dy/d*30,6]);bz(15);tone(300,.12,"square")};
+cv.onpointerup=e=>{if(e.pointerId==hold)hold=0};cv.onpointercancel=cv.onpointerup;
+onkeydown=e=>{if(e.code=="Space"&&cur==8){keys=1;e.preventDefault()}if(e.code=="KeyR"&&cur==8&&!rl&&mag<10&&res>0){res+=mag;mag=0;rl=1.1}};onkeyup=e=>{if(e.code=="Space")keys=0};
+const ov=(a,b)=>{x.fillStyle="#000a";x.fillRect(0,0,W,Hh);x.fillStyle="#fff";x.textAlign="center";x.font="700 22px Georgia";x.fillText(a,cx,220);x.font="14px system-ui";x.fillStyle="#b58cff";x.fillText(b,cx,250);x.textAlign="left"};
+const loop=n=>{GR=requestAnimationFrame(loop);const dt=Math.min(.05,(n-last)/1000);last=n;const hl=hold||keys;
+if(st==1){t+=dt;ar+=dt;if(ar>1.3-t/70){ar=0;const p=sp[Math.random()*5|0],hp=t>20&&Math.random()<.35?2:1;E.push({x:p[0],y:p[1],d:0,hp,r:hp>1?18:14,v:34+t*1.1})}
+for(const z of E){const dx=cx-z.x,dy=cy-z.y,d=Math.hypot(dx,dy);z.x+=dx/d*z.v*dt;z.y+=dy/d*z.v*dt;if(d<30){z.d=2;s--;fx.push([cx,cy,20]);bz(50);tone(70,.3,"sawtooth")}}
+if(rl>0){rl-=dt;if(rl<=0){const n=Math.min(10,res);mag=n;res-=n}}else if(mag<1&&res>0)rl=1.1;B.forEach(b=>{b.x+=b.vx*dt;b.y+=b.vy*dt;for(const z of E)if(!z.d&&!b.h&&Math.hypot(b.x-z.x,b.y-z.y)<z.r+4){b.h=1;fx.push([z.x,z.y,8]);if(--z.hp<1){z.d=1;kills++;tone(120,.12,"square");if(Math.random()<.2)res+=2}}});B=B.filter(b=>!b.h&&b.x>-20&&b.x<W+20&&b.y>-20&&b.y<Hh+20);E=E.filter(z=>!z.d);
+if(t>22.5){if(hl)stone=Math.max(0,stone-30*dt);else stone+=12*dt;if(stone>=100){stone=0;s--;stat++;bz(120);tone(90,.8)}}
+if(s<=0){st=2;s=0}else if(t>=60){st=3;tone(392,1.5);setTimeout(()=>{if(cur==8&&st==3)go(9)},2800)}}
+x.fillStyle="#150c26";x.fillRect(0,0,W,Hh);
+x.fillStyle="#2b1a3a";sp.forEach(p=>{x.beginPath();x.arc(p[0],p[1],16,0,7);x.fill()});
+x.strokeStyle=hl?"#b58cff":"#ffffff33";x.lineWidth=hl?6:2;x.beginPath();x.arc(cx,cy,48,0,7);x.stroke();
+for(let i=0;i<10;i++){const a=i/10*6.283;x.fillStyle=i<s?"#e0b090":i<s+stat?"#7b7b88":"#ffffff12";x.beginPath();x.arc(cx+34*Math.cos(a),cy+34*Math.sin(a),7,0,7);x.fill()}
+x.fillStyle="#ffd28a";B.forEach(b=>{x.beginPath();x.arc(b.x,b.y,3,0,7);x.fill()});for(const z of E){x.fillStyle=z.hp>1?"#2a0a1a":"#05030a";x.beginPath();x.arc(z.x,z.y,z.r,0,7);x.fill();x.fillStyle="#ff5a7a";x.fillRect(z.x-6,z.y-3,4,3);x.fillRect(z.x+2,z.y-3,4,3)}
+fx=fx.filter(f=>(f[2]+=dt*60)<45);x.strokeStyle="#ffd28a";x.lineWidth=2;fx.forEach(f=>{x.beginPath();x.arc(f[0],f[1],f[2],0,7);x.stroke()});
+x.fillStyle="rgba(123,123,136,"+stone/250+")";x.fillRect(0,0,W,Hh);x.fillStyle="#9a90b8";x.fillRect(0,Hh-8,W*stone/100,8);
+x.fillStyle="#fff";x.font="600 14px system-ui";x.fillText("🕘 "+T(Math.round((21+t/7.5)*60))+"   👥 "+s+"   🪨 "+stat+"   ⚔ "+kills,10,Hh-18);x.fillText("🔫 "+mag+" / "+res+(rl>0?"  reloading…":res+mag<1?"  OUT OF AMMO":""),10,24);
+if(st==1&&stone>35&&!hl){x.fillStyle="#ff5a7a";x.textAlign="center";x.fillText("Stone is spreading! Hold the camp ring!",cx,cy+90);x.textAlign="left"}
+if(st==0)ov("The 9-to-5 Shift","Tap to begin");if(st==2)ov("The night took everyone","Tap to try again");if(st==3)ov("5:00 AM. Ash. "+s+" of 10 still human.","Heading to the final page…")};
+last=performance.now();loop(last)}
+addEventListener("devicemotion",e=>{const a=e.accelerationIncludingGravity;if(a&&cur==6&&Math.hypot(a.x,a.y,a.z)>28){const b=document.querySelector("#ep button");b&&b.click()}});
+const thanksH=()=>`<div class="cover fade"><div class="kick">Thank you for reading</div><h1>The 9-to-5 <b>Nightmare</b></h1><div class="art">${art("c")}</div><p class="sub">Ten strangers walked into the dark, and came back holding hands.</p><p class="sub" style="font-style:normal;margin-bottom:6px">A story by</p><h2 style="margin-bottom:10px">Marc Bambao</h2><p class="sub">Thank you for surviving the night with us.</p><button class="go" onclick="go(0)">Read again ↺</button></div>`;
+const WD={1:["By 8:45 PM",()=>mapW(0),()=>mapI(0)],2:["The remaining group had dwindled",()=>mapW(1),()=>mapI(1)],3:["Within thirty minutes",stW,stI],4:["That night, when the 9:00 PM",trW,trI],5:["One by one, the others",rgW,rgI],6:["A deafening",epW,epI]};
+
+for(let i=0;i<N;i++){const d=document.createElement("i");d.onclick=()=>go(i);dots.appendChild(d)}
+let cur=0;
+function render(){clearInterval(tm);cancelAnimationFrame(GR);seen.clear();let h="";
+if(!cur)h=`<div class="cover fade"><div class="kick">A short story by Marc Bambao</div><h1>The 9-to-5 <b>Nightmare</b></h1><div class="art">${art("w")}</div><p class="sub">Every night at nine, the whistle blows. Every morning at five, it stops. In between, someone has to pay.</p><button class="go" onclick="go(1)">Begin the shift →</button><div class="chips"><span>👆 Tap glowing times</span><span>↔ Drag scenes, swipe pages</span><span>💬 Tap dotted words</span><span>🌧 Tap a scene</span><span>🧭 Answer the questions</span></div><h3>The world in three lines</h3><div class="cast">${RULES.map(card).join("")}</div><h3>Who you’ll meet</h3><div class="cast">${CAST.map(card).join("")}</div><div class="toc">${C.map((c,i)=>`<a onclick="go(${i+1})">${c[0]} · ${c[1]}</a>`).join("")}</div></div>`;
+else if(cur>C.length+2)h=thanksH();else if(cur>C.length)h=cur>C.length+1?gameH():quizH();else{const[k,t,s,x]=C[cur-1],wd=WD[cur],rc=RC[cur];let dn=0;
+h=`<div class="fade"><div class="kick">${k}</div><h2>${t}</h2>${s=="c"?"":`<div class="art">${art(s)}</div>`}<details><summary>📍 Setting the scene</summary><p>${rc[0]}</p><p><b>Watch</b> ${rc[1]}</p></details>`+x.split("\n\n").map(p=>{let o=`<p${/^\*\*.+\*\*$/.test(p)?' class="time"':""}>${gl(fmt(p))}</p>`;if(wd&&!dn&&p.includes(wd[0])){dn=1;o+=wd[1]()}return o}).join("")+EN(cur)+`<button class="nxt" onclick="go(cur<N-1?cur+1:0)">${cur<N-1?"Next chapter →":"Read again ↺"}</button></div>`}
+app.innerHTML=h;[...dots.children].forEach((d,i)=>d.classList.toggle("on",i==cur));
+bp.disabled=cur==0;bn.disabled=cur==N-1;bn.textContent=cur==0?"Start →":"Next →";
+hud.hidden=!cur||cur>C.length;if(cur&&cur<=C.length)sH({t:TS[cur],n:POP[cur],m:MOOD[cur]});
+if(cur&&WD[cur])WD[cur][2]();if(hum){hum.o.stop();hum=0}xI();if(cur==7)qI();if(cur==8)gI();document.querySelectorAll(".art").forEach(a=>a.onclick=()=>{a.classList.toggle("fx");tone(cur==5?300:80,.6);bz(20)});
+io.disconnect();
+document.querySelectorAll(".time").forEach(e=>{io.observe(e);e.onclick=()=>{const s=e.textContent,b=/BLARE/.test(s);tone(b?110:/PM/.test(s)?98:/AM/.test(s)?392:220,1.6,b?"sawtooth":"sine");bz(60);app.classList.remove("sk");void app.offsetWidth;app.classList.add("sk")}});
+document.querySelectorAll(".art").forEach(a=>a.onpointermove=e=>{const r=a.getBoundingClientRect();a.style.setProperty("--px",((e.clientX-r.left)/r.width-.5)*-30)});
+scrollTo({top:0,behavior:"instant"});try{history.replaceState(null,"","#"+cur)}catch(e){}
+if(cur==1&&!hinted){hinted=1;setTimeout(()=>tip("Tip: tap glowing times and dotted words, drag the scenes, and swipe to turn the page."),1200)}}
+function go(i){cur=Math.max(0,Math.min(N-1,i));render()}
+bp.onclick=()=>go(cur-1);bn.onclick=()=>go(cur+1);
+addEventListener("click",e=>{const g=e.target.closest(".gl");if(g)tip(g.textContent+": "+GL[g.dataset.k]);else tipEl.classList.remove("on")});
+addEventListener("keydown",e=>{if(e.key=="ArrowRight")go(cur+1);if(e.key=="ArrowLeft")go(cur-1)});
+let sx=0,ig=0;addEventListener("touchstart",e=>{sx=e.touches[0].clientX;ig=!!e.target.closest(".art,.wid,.cast,input")},{passive:true});
+addEventListener("touchend",e=>{const d=e.changedTouches[0].clientX-sx;if(!ig&&Math.abs(d)>90)go(cur+(d<0?1:-1))},{passive:true});
+go(parseInt(location.hash.slice(1))||0);
+
+</script></body></html>
